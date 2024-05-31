@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.grid-row {
+  display: flex;
+  font-weight: bold;
+}
+
+.grid-row span {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  margin: 2px;
+}
+
+.green-cell {
+  color: green;
+}
