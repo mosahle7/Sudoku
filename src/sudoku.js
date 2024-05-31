@@ -1,5 +1,5 @@
-
-export function solveSudoku(grid) {
+export function solved(grid){
+  function solveSudoku(grid) {
     function isSafe(i,j,x,grid) {
         for(let k=0;k<=8;k++){
             if (grid[i][k] === x || grid[k][j]===x) {
@@ -25,7 +25,7 @@ export function solveSudoku(grid) {
 
         for(let r=0;r<=8;r++){
             for(let c=0;c<=8;c++){
-                if (grid[r][c] === '__'){
+                if (grid[r][c] === ''){
                     isEmpty=true;
                     i=r;
                     j=c;
@@ -41,11 +41,14 @@ export function solveSudoku(grid) {
                 grid[i][j]=x;
                 if(solveSudoku(grid)) return true;
 
-                grid[i][j]='__';
+                grid[i][j]='';
             }
         }
         return false;
     }
+    solveSudoku(grid);
+    return grid;
+  }
 
 // if(solveSudoku(grid)){
 //     // console.log('Sudoku solved! :');
@@ -60,8 +63,9 @@ export function printGrid(grid) {
         {grid.map((row,rowInd) => (
           <div key={rowInd} className="grid-row">
             {row.map((cell,cellInd) => (
-              <span key={cellInd} className={cell === '_' || cell === '__' ? 'green-cell': ''}>
+              <span key={cellInd} className={ cell === ''? 'green-cell': 'normal-cell'}>
                 {cell}
+                {console.log(cellInd)}
               </span>
             ))}
 
