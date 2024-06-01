@@ -1,76 +1,47 @@
-export function solved(grid){
-  function solveSudoku(grid) {
-    function isSafe(i,j,x,grid) {
-        for(let k=0;k<=8;k++){
-            if (grid[i][k] === x || grid[k][j]===x) {
-                return false;
-            }  
-        }
+import React from 'react'
+import { solved} from './components/code';
+import { useState } from 'react';
+import printSol from './components/printSol';
+import { Solve } from './components/Map';
 
-        let ri=i-i%3;
-        let ci=j-j%3;
+export const Sudoku = () => {
+    const [click, setClick] = useState(false);
 
-        for(let l =0;l<=2;l++){
-            for(let m =0;m<=2;m++){
-                if (grid[l+ri][m+ci]===x) return false;
-            }
-        }
-        return true;
-        }
+  const grid=[
+    [4,9,6,'','',7,'','',2],
+    ['',1,8,'','',6,7,'',5],
+    ['','',3,2,'','',1,9,''],
+    ['','',4,9,'','',5,'',''],
+    [1,'','','','',3,'',2,''],
+    ['',6,'',4,1,5,3,'',''],
+    [5,'',1,6,'',2,9,'',''],
+    [6,4,9,8,'','','','',7],
+    [8,2,'','','',9,'','',''],
+]
+  const inputGrid = [...grid.map(row => [...row])]; // Deep copy to preserve the original grid
+  const solGrid = solved(grid);
 
-        let i=-1;
-        let j=-1;
-
-        let isEmpty=false;
-
-        for(let r=0;r<=8;r++){
-            for(let c=0;c<=8;c++){
-                if (grid[r][c] === ''){
-                    isEmpty=true;
-                    i=r;
-                    j=c;
-                    break;
-                }
-            }
-            if(isEmpty) break;
-        }
-        if(!isEmpty) return true;
-
-        for(let x=1;x<=9;x++){
-            if(isSafe(i,j,x,grid)){
-                grid[i][j]=x;
-                if(solveSudoku(grid)) return true;
-
-                grid[i][j]='';
-            }
-        }
-        return false;
-    }
-    solveSudoku(grid);
-    return grid;
-  }
-
-// if(solveSudoku(grid)){
-//     // console.log('Sudoku solved! :');
-//     return printGrid(grid);
-// }
-// export function printGrid(grid){
-//     return grid.map(row => row.join(' ')).join('\n');
-//     }
-export function printGrid(grid) {
-    return (
-      <div>
-        {grid.map((row,rowInd) => (
-          <div key={rowInd} className="grid-row">
-            {row.map((cell,cellInd) => (
-              <span key={cellInd} className={ cell === ''? 'green-cell': 'normal-cell'}>
-                {cell}
-                {console.log(cellInd)}
-              </span>
-            ))}
-
-          </div>
-        ))}
+ 
+  
+  return (
+    
+    
+      <div className=''>
+      {!click &&
+      <div>Solve:
+      <Solve grid ={inputGrid} />
       </div>
-    );
-  }
+        }
+      
+      {click &&
+        <div>Solved Sudoku Grid:
+        {printSol(solGrid)}
+        </div>
+      }
+
+      {/* <pre>{printGrid(inputGrid)}</pre> */}
+      {!click && <button onClick={() =>setClick(true)}>Show the answer</button>}
+      {click && <button onClick={() =>setClick(false)}>Hide the answer</button>}
+  </div>
+  );
+}
