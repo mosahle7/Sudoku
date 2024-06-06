@@ -30,7 +30,7 @@ export const Solve= ({grid}) => {
                 const key = rowInd * 9 + cellInd;
                 const cell = keyValueMap[key];
                 row.push(
-                    <span key={key} className={cell === '' ? 'green-cell' : 'normal-cell'}>
+                    <span key={key} className={cell === '' ? 'green-cell' : 'normal-cell'} onClick={()=>{changeData(key)}}>
                     {cell}
                   </span>
                 )
@@ -49,16 +49,16 @@ export const Solve= ({grid}) => {
         printGrid(data);
     },[data]);
 
-    const changeData = () => {
+    const changeData = (id) => {
         const newData = {...data};
-        newData[0]='X';
+        newData[id]='X';
         setData(newData);
     }
 
     return(
         <>
         <div>{printGrid(data)}</div>
-        <button onClick={changeData}>Change Data</button>
+        {/* <button onClick={()=>{changeData(1)}}>Change Data</button> */}
         </>
     )
 
