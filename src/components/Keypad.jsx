@@ -1,6 +1,8 @@
 import React from 'react'
 
-const Keypad = () => {
+const Keypad = (changeKeypad) => {
+  const check=null;
+
     const arr=[]
     let k=1;
     for(let i =1;i<=3;i++){
@@ -12,6 +14,7 @@ const Keypad = () => {
         arr.push(row)
     }
 
+
     
   return (
     <div>
@@ -20,7 +23,7 @@ const Keypad = () => {
         <div key={rowInd} className='grid-row'>
           {row.map((cell,cellInd) => (
             <span key={rowInd*3+cellInd+1} className='keypad-cell'
-            onClick={() => {console.log(rowInd*3+cellInd+1)}}>
+            onClick={() => {check=rowInd*3+cellInd+1}}>
               {cell}
               {/* {console.log(`Elements: ${(rowInd)*3+cellInd+1}`)} */}
             </span>

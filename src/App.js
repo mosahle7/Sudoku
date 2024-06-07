@@ -9,7 +9,7 @@ function App() {
   <header className="App-header ">
   <div className='container'>
   <Sudoku />
-  <Keypad />
+  {/* <Keypad /> */}
   </div>
   </header>
 

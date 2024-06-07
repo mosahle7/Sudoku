@@ -3,6 +3,7 @@ import { solved} from './components/code';
 import { useState } from 'react';
 import printSol from './components/printSol';
 import { Solve } from './components/Solve';
+import Keypad from './components/Keypad'
 
 export const Sudoku = () => {
     const [click, setClick] = useState(false);
@@ -24,14 +25,15 @@ export const Sudoku = () => {
   const inputGrid = [...grid.map(row => [...row])]; // Deep copy to preserve the original grid
   const solGrid = solved(grid);
 
-  const changeData = (id) => {
+  // const changeKeypad = (id) => {
+  //   return id;
+  // }
+  const changeData = (id,value) => {
     const newPlayingGrid=[...playingGrid];
     const row=Math.floor(id/9);
     const col=id%9;
-    newPlayingGrid[row][col]='X';
+    newPlayingGrid[row][col]=value;
     setPlayingGrid(newPlayingGrid);
-
-    
     // setGri(mapToGrid(data));
 }
   
@@ -39,6 +41,7 @@ export const Sudoku = () => {
     
     
       <div className=''>
+      {/* <Keypad /> */}
       {!click &&
       <div>Solve:
       <Solve grid ={playingGrid} changeData={changeData} />
