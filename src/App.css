@@ -56,10 +56,37 @@
 .green-cell {
   border: 1.5px solid green;
   background-color: lightblue;
+  transition: transform 0.3s ease-in-out;
 }
 
+.green-cell:hover{
+  transform: scale(1.05); 
+}
 .normal-cell{
   border: 1.5px solid #ccc;
   color: cornflowerblue;
   background-color: rgb(0, 0, 0);
+}
+
+.keypad-cell{
+  border: 1.5px solid #ccc;
+  color: cornflowerblue;
+  background-color: rgb(0, 0, 0);
+}
+
+.keypad-cell:hover{
+  background-color: lightblue;
+  color: black;
+}
+
+.container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 20px; */
+}
+
+.container > * {
+  margin: 40px;
 }

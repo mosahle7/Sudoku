@@ -1,16 +1,13 @@
 import React, {useState,useEffect} from 'react'
 
-export const Solve= ({grid}) => {
+export const Solve= ({grid,changeData}) => {
     const [data, setData] = useState({});
-    useEffect(() => {
-        setData(Map(grid));
-    }, []); // Empty dependency array ensures this effect runs only once, similar to componentDidMount in class components
 
-    const Map = (grid) => {
-        // if (!Array.isArray(grid)) {
-        //     console.error('Grid must be an array.');
-        //     return {};
-        // }
+    useEffect(() => {
+        setData(gridToMap(grid));
+    }, [grid]);
+
+    const gridToMap = (grid) => {
         const keyValueMap = {}
         grid.forEach((row,rowInd) => {
             row.forEach((cell,cellInd) => {
@@ -20,7 +17,7 @@ export const Solve= ({grid}) => {
         })
         return keyValueMap;
     }
-    
+
     const printGrid = (keyValueMap) => {
         const rows = [];
     
@@ -30,7 +27,11 @@ export const Solve= ({grid}) => {
                 const key = rowInd * 9 + cellInd;
                 const cell = keyValueMap[key];
                 row.push(
-                    <span key={key} className={cell === '' ? 'green-cell' : 'normal-cell'} onClick={()=>{changeData(key)}}>
+                    <span 
+                    key={key} 
+                    className={cell === '' ? 'green-cell' : 'normal-cell'} 
+                    onClick={cell === '' ? ()=>{changeData(key)} : undefined}
+                    >
                     {cell}
                   </span>
                 )
@@ -45,15 +46,12 @@ export const Solve= ({grid}) => {
     
       }
 
-    useEffect(() => {
-        printGrid(data);
-    },[data]);
+    // useEffect(() => {
 
-    const changeData = (id) => {
-        const newData = {...data};
-        newData[id]='X';
-        setData(newData);
-    }
+    //     printGrid(data);
+    // },[data]);
+
+    
 
     return(
         <>

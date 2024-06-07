@@ -2,11 +2,12 @@ import React from 'react'
 import { solved} from './components/code';
 import { useState } from 'react';
 import printSol from './components/printSol';
-import { Solve } from './components/Map';
+import { Solve } from './components/Solve';
 
 export const Sudoku = () => {
     const [click, setClick] = useState(false);
-
+   
+  
   const grid=[
     [4,9,6,'','',7,'','',2],
     ['',1,8,'','',6,7,'',5],
@@ -18,10 +19,21 @@ export const Sudoku = () => {
     [6,4,9,8,'','','','',7],
     [8,2,'','','',9,'','',''],
 ]
+
+  const [playingGrid,setPlayingGrid] = useState([...grid.map(row => [...row])]);
   const inputGrid = [...grid.map(row => [...row])]; // Deep copy to preserve the original grid
   const solGrid = solved(grid);
 
- 
+  const changeData = (id) => {
+    const newPlayingGrid=[...playingGrid];
+    const row=Math.floor(id/9);
+    const col=id%9;
+    newPlayingGrid[row][col]='X';
+    setPlayingGrid(newPlayingGrid);
+
+    
+    // setGri(mapToGrid(data));
+}
   
   return (
     
@@ -29,7 +41,7 @@ export const Sudoku = () => {
       <div className=''>
       {!click &&
       <div>Solve:
-      <Solve grid ={inputGrid} />
+      <Solve grid ={playingGrid} changeData={changeData} />
       </div>
         }
       
