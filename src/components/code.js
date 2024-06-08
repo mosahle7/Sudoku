@@ -1,17 +1,17 @@
-export function solved(grid){
+export function Code(size,grid){
   function solveSudoku(grid) {
     function isSafe(i,j,x,grid) {
-        for(let k=0;k<=8;k++){
+        for(let k=0;k<=size-1;k++){
             if (grid[i][k] === x || grid[k][j]===x) {
                 return false;
             }  
         }
+        let root = Math.sqrt(size);
+        let ri=i-i%root;
+        let ci=j-j%root;
 
-        let ri=i-i%3;
-        let ci=j-j%3;
-
-        for(let l =0;l<=2;l++){
-            for(let m =0;m<=2;m++){
+        for(let l =0;l<=(root-1);l++){
+            for(let m =0;m<=(root-1);m++){
                 if (grid[l+ri][m+ci]===x) return false;
             }
         }
@@ -23,8 +23,8 @@ export function solved(grid){
 
         let isEmpty=false;
 
-        for(let r=0;r<=8;r++){
-            for(let c=0;c<=8;c++){
+        for(let r=0;r<=size-1;r++){
+            for(let c=0;c<=size-1;c++){
                 if (grid[r][c] === ''){
                     isEmpty=true;
                     i=r;
@@ -36,7 +36,7 @@ export function solved(grid){
         }
         if(!isEmpty) return true;
 
-        for(let x=1;x<=9;x++){
+        for(let x=1;x<=size;x++){
             if(isSafe(i,j,x,grid)){
                 grid[i][j]=x;
                 if(solveSudoku(grid)) return true;

@@ -1,22 +1,29 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, useRef} from 'react'
 
-export const Solve= ({grid,changeData}) => {
-    const [data, setData] = useState({});
+export const Solve= ({size,inputGrid,grid,changeData}) => {
+    const [data, setData] = useState(null);
     const [selectedCell, setSelectedCell] = useState(null);
     const [num,setNum] = useState(null);
+    const root=Math.sqrt(size);
+    const initialGridMap = null;
 
-    useEffect(() => {
-        setData(gridToMap(grid));
-    }, []);
+   useEffect(() => {
+      if(!data){
+        // initialGridMap.current = gridToMap(grid);
+        // setData(initialGridMap.current);
+        setData(gridToMap(inputGrid,grid))
+      }
+   
+    }, [grid,data]);
 
 
 
-    const gridToMap = (grid) => {
+    const gridToMap = (inputGrid,grid) => {
         const keyValueMap = {}
         grid.forEach((row,rowInd) => {
             row.forEach((cell,cellInd) => {
                 const key = rowInd*grid.length+cellInd;
-                keyValueMap[key]={value:cell, fixed: cell!== ''};
+                keyValueMap[key]={value:cell, fixed: inputGrid[rowInd][cellInd]!== ''};
             })
         })
         return keyValueMap;
@@ -25,16 +32,16 @@ export const Solve= ({grid,changeData}) => {
     const printGrid = (keyValueMap) => {
         const rows = [];
     
-        for(let rowInd=0 ;rowInd<9; rowInd++){
+        for(let rowInd=0 ;rowInd<size; rowInd++){
             const row=[];
-            for (let cellInd=0;cellInd<9;cellInd++){
-                const key = rowInd * 9 + cellInd;
+            for (let cellInd=0;cellInd<size;cellInd++){
+                const key = rowInd * size + cellInd;
                 if (keyValueMap[key] !== undefined) {
                 const {value, fixed} = keyValueMap[key];
                 row.push(
                     <span 
                     key={key} 
-                    className={fixed? 'fixed-cell' : (value === ''? 'green-cell':'normal-cell')} 
+                    className={fixed? 'fixed-cell' : 'green-cell'} 
                     onClick={!fixed? ()=>setSelectedCell(key) : undefined}
                     >
                     {value}
@@ -56,9 +63,9 @@ export const Solve= ({grid,changeData}) => {
         //keypad
         const arr=[]
         let k=1;
-        for(let i =1;i<=3;i++){
+        for(let i =1;i<=root;i++){
             let row=[];
-            for(let j=1;j<=3;j++){
+            for(let j=1;j<=root;j++){
                 row.push(k);
                 k++;
             }
@@ -75,7 +82,7 @@ export const Solve= ({grid,changeData}) => {
                 changeData(selectedCell,num)
                 setData((prevData) => {
                     const newData = {...prevData};
-                    newData[selectedCell].value=num;
+                    newData[selectedCell]={...newData[selectedCell], value:num};
                     return newData;
                 })
                 // setSelectedCell(null)
@@ -85,7 +92,8 @@ export const Solve= ({grid,changeData}) => {
 
     return(
         <>
-        <div>{printGrid(data)}</div>
+        <div className='container'>
+        <div>Solve:{data && printGrid(data)}</div>
 
         {/* <button onClick={()=>{changeData(1)}}>Change Data</button> */}
         
@@ -94,9 +102,9 @@ export const Solve= ({grid,changeData}) => {
       {arr.map((row,rowInd) => (
         <div key={rowInd} className='grid-row'>
           {row.map((cell,cellInd) => (
-            <span key={rowInd*3+cellInd+1} className='keypad-cell'
+            <span key={rowInd*root+cellInd+1} className='keypad-cell'
             onClick={() => {
-                setNum(rowInd*3+cellInd+1)
+                setNum(rowInd*root+cellInd+1)
                 }}>
               {cell}
               {/* {console.log(`Elements: ${(rowInd)*3+cellInd+1}`)} */}
@@ -106,6 +114,7 @@ export const Solve= ({grid,changeData}) => {
         </div>
 
       ))}
+    </div>
     </div>
         </>
     )

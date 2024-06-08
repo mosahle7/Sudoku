@@ -6,7 +6,7 @@ const printSol = (grid) => {
         {grid.map((row,rowInd) => (
           <div key={rowInd} className="grid-row">
             {row.map((cell,cellInd) => (
-              <span key={cellInd} className={ cell === ''? 'green-cell': 'normal-cell'}>
+              <span key={cellInd} className='fixed-cell'>
                 {cell}
                 {console.log(cellInd)}
               </span>
