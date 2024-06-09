@@ -92,8 +92,13 @@ export const Solve= ({size,inputGrid,grid,changeData}) => {
 
     return(
         <>
+        <div className='solveheading'>Solve:</div>
         <div className='container'>
-        <div>Solve:{data && printGrid(data)}</div>
+       
+
+          {data && printGrid(data)}
+         
+        
 
         {/* <button onClick={()=>{changeData(1)}}>Change Data</button> */}
         
