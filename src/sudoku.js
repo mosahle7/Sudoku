@@ -5,6 +5,7 @@ import printSol from './components/printSol';
 import { Solve } from './components/Solve';
 import Timer from './components/Timer';
 import styled from 'styled-components';
+import Faulty from './components/Faulty';
 
 export const Sudoku = () => {
     const [click, setClick] = useState(false);
@@ -43,6 +44,10 @@ export const Sudoku = () => {
     const col=id%size;
     newPlayingGrid[row][col]=value;
     setPlayingGrid(newPlayingGrid);
+    console.log(row,col,value);
+    const f=Faulty(playingGrid,row,col,size,value);
+    console.log(f)
+    
     // setGri(mapToGrid(data));
 }
   

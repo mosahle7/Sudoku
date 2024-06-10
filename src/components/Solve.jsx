@@ -5,7 +5,6 @@ export const Solve= ({size,inputGrid,grid,changeData}) => {
     const [selectedCell, setSelectedCell] = useState(null);
     const [num,setNum] = useState(null);
     const root=Math.sqrt(size);
-    const initialGridMap = null;
 
    useEffect(() => {
       if(!data){
